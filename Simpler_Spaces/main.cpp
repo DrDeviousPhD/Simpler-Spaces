@@ -50,6 +50,8 @@ int main()
 
 	/* Testing if addComp works */
 
+	cout << "\nAdding components." << endl;
+
 	sub.addComp<Comp1>(0);
 	sub.addComp<Comp2>(0);
 
@@ -57,6 +59,8 @@ int main()
 	sub.addComp<Comp3>(0);	// Also shouldn't work
 
 	/* Now testing if hasComp works */
+
+	cout << "\nTesting hasComp" << endl;
 
 	if (sub.hasComp<Comp1>(0)) { cout << "sub has Comp1 at 0" << endl; }
 	if (sub.hasComp<Comp2>(0)) { cout << "sub has Comp2 at 0" << endl; }
@@ -68,10 +72,26 @@ int main()
 
 	/* Now testing if we can remove components */
 
+	cout << "\nTesting removeComp" << endl;
+
+	sub.removeComp<Comp1>(0);
+
 	/* Delete via object id (remove all components attached to objid) */
 
 	sub.deleteObject(0);
 
+	///* Testing to see how we should delete objects in map */
+	//
+	//cout << "Plain ol object" << endl;
+	//unordered_map<unsigned int, Comp1> test1;
+	//test1.insert({ 0, Comp1() });
+	//test1.erase(0);
+
+	//cout << "Unique ptr" << endl;
+	//unordered_map<unsigned int, unique_ptr<Comp1>> test2;
+	//test2.insert({ 0, unique_ptr<Comp1>(new Comp1()) });
+	//test2.erase(0);
+	
 	cin.get();
 
 	return 0;

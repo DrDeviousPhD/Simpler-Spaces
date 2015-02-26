@@ -106,7 +106,9 @@ public:
 			}
 
 			/* Add the component */
-			components[type][_objid] = unique_ptr<CompType>(new CompType());
+			//components[type][_objid] = unique_ptr<CompType>(new CompType());
+			components[type].insert({ _objid, unique_ptr<CompType>(new CompType()) });	// How bout this?
+
 
 			return;
 		}
@@ -136,11 +138,12 @@ public:
 			{
 				components[type][_objid].reset(nullptr);	// setting to nullptr deletes
 				// REMOVE FROM MAP
+				components[type].erase(_objid);
 				return;
 			}
 			else
 			{
-				cout << "No object " << type.name << " at id " << _objid << endl;
+				cout << "No object " << type.name() << " at id " << _objid << endl;
 				return;
 			}
 
