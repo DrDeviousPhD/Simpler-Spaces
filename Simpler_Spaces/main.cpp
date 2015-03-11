@@ -8,6 +8,8 @@ class Comp1 : public Component
 public:
 	Comp1() { cout << "Comp1 Constructed" << endl; }
 	~Comp1() { cout << "Comp1 Destructed" << endl; }
+
+	int a;
 };
 
 class Comp2 : public Component
@@ -15,6 +17,8 @@ class Comp2 : public Component
 public:
 	Comp2() { cout << "Comp2 Constructed" << endl; }
 	~Comp2() { cout << "Comp2 Destructed" << endl; }
+
+	char b;
 };
 
 class Comp3 : public Component
@@ -22,6 +26,8 @@ class Comp3 : public Component
 public:
 	Comp3() { cout << "Comp3 Constructed" << endl; }
 	~Comp3() { cout << "Comp3 Destructed" << endl; }
+
+	bool c;
 };
 
 class NotComp
@@ -70,15 +76,29 @@ int main()
 	if (sub.hasComp<Comp2>(1)) { cout << "sub has Comp2 at 1" << endl; }	// shouldn't show
 	if (sub.hasComp<Comp3>(1)) { cout << "sub has Comp3 at 1" << endl; }	// shouldn't show (except that sub doesn't handle Comp3)
 
+
+	/* Now try to get the components from the map */
+
+	cout << "Testing getComp now." << endl;
+
+	//auto comp = sub.getComp<Comp1>(0);
+
 	/* Now testing if we can remove components */
 
-	cout << "\nTesting removeComp" << endl;
+	//cout << "\nTesting removeComp" << endl;
 
-	sub.removeComp<Comp1>(0);
+	//sub.removeComp<Comp1>(0);
 
 	/* Delete via object id (remove all components attached to objid) */
 
+	cout << "Attempting to delete all components attached to objid 0" << endl;
+
 	sub.deleteObject(0);
+
+	cout << "Do they still exist?" << endl;
+	
+	if (sub.hasComp<Comp1>(0) || sub.hasComp<Comp2>(0)) cout << "Yes." << endl;
+	else if (sub.hasComp<Comp1>(0) == false && sub.hasComp<Comp2>(0) == false) cout << "Nope." << endl;
 
 	///* Testing to see how we should delete objects in map */
 	//

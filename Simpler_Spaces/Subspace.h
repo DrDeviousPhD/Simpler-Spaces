@@ -28,6 +28,9 @@ using namespace std;
 
 class Space;
 
+class NO_COMPONENT : public Component
+{};
+
 class Subspace
 {
 private:
@@ -120,6 +123,37 @@ public:
 
 		return;
 
+	}
+
+
+	/* Returns nullptr if no object found. */
+	template <typename CompType>
+	CompType* getComp(unsigned int _objid)
+	{
+
+		/* Get type info */
+		type_index type = typeid(CompType);
+
+		/* First check if we handle this type of component */
+		if (components.count(type) > 0)			// count() returns 1 if we do handle components of CompType
+		{
+			if (components[type].count(_objid) > 0)	// returns 1 if there is a component at _objid. We want that. It means we can return the component and leave.
+			{
+				auto comp = components.at(type).at(_objid);
+				return *static_cast<CompType*>(comp.get());
+			}
+			else	// No component on that _objid. Return nullptr.
+			{
+				return nullptr;
+			}
+		}
+		else
+		{
+			cout << "Unhandled type: " << type.name() << endl;
+			return nullptr;
+		}
+
+		return nullptr;
 	}
 
 	template < typename CompType >
